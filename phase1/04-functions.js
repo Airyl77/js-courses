@@ -17,6 +17,23 @@ function clamp(num, min, max) {
 // and returns a new function that passes a value through each one:
 // const transform = pipe(double, addOne, square);
 // transform(3) → ((3 * 2) + 1) ** 2 = 49
+function pipe(...funcs) {
+    return function(value) {
+        let result = value;
+        for (const func of funcs) {
+            result = func(result)
+        }
+        return result
+    }
+}
+//can be shortened like const pipe = (...funcs) => value => funcs.reduce((v, fn) => fn(v), value);
+
+const double  = n => n * 2;
+const addOne  = n => n + 1;
+const square  = n => n ** 2;
+
+const transform = pipe(double, addOne, square);
+console.log(transform(3)); // 49
 
 // 3. Rewrite this using an arrow function with implicit return:
 function multiply(a, b) {
