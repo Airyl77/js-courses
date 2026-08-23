@@ -47,10 +47,27 @@ console.log(isShipped);
 
 // 8. Sort orders by price, lowest to highest (don't mutate the original).
 //    Hint: spread into a new array first, then sort.
+// [...orders] creates a shallow copy, so sort() rearranges the copy instead of
+// changing the original orders array. The comparison function receives two
+// order objects, a and b, and returns a.price - b.price: a negative result
+// places a before b, a positive result places b before a, and zero treats them
+// as equal. Because the prices are compared numerically, the result is ordered
+// from the lowest price to the highest price.
+const sortedByPrice = [...orders].sort((a, b) => a.price - b.price);
+console.log(sortedByPrice);
 
 // 9. Group orders by shipped status using reduce.
 // Result should look like:
 // { true: [...shipped orders], false: [...unshipped orders] }
+const groupedByShipped = orders.reduce((acc, prod) => {
+  const key = prod.shipped; // true or false
+  if (!acc[key]) {
+    acc[key] = []; // create an array for this key if it doesn't exist
+  }
+  acc[key].push(prod); // add the product to the appropriate array
+  return acc;
+}, {});
+console.log(groupedByShipped);
 
 // 10. Return a new array of orders with a discount applied —
 // 10% off all items over $400. Don't mutate the originals.
