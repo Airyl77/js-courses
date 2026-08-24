@@ -72,6 +72,13 @@ console.log(groupedByShipped);
 // 10. Return a new array of orders with a discount applied —
 // 10% off all items over $400. Don't mutate the originals.
 // Hint: map + spread to create new objects.
+const getDiscount = [...orders].map((acc) => {
+  if (acc.price > 400) {
+    acc.price *=  0.9;
+  } 
+  return acc;
+},{}); //object => object property
+console.log(getDiscount);
 
 // 11. Get the products sorted alphabetically, without mutating
 // the original orders array.
