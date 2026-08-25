@@ -72,16 +72,21 @@ console.log(groupedByShipped);
 // 10. Return a new array of orders with a discount applied —
 // 10% off all items over $400. Don't mutate the originals.
 // Hint: map + spread to create new objects.
-const getDiscount = [...orders].map((acc) => {
-  if (acc.price > 400) {
-    acc.price *=  0.9;
-  } 
-  return acc;
-},{}); //object => object property
+const getDiscount = [...orders].map((order) => {
+  if (order.price > 400) {
+    //For orders whose price is greater than $400, { ...order, price: order.price * 0.9 } creates a new object. 
+    // It copies the original properties and replaces price with a value representing a 10% discount. Orders priced 
+    // at $400 or less are returned unchanged.
+    order = { ...order, price: order.price * 0.9 };
+  }
+  return order;
+});
 console.log(getDiscount);
 
 // 11. Get the products sorted alphabetically, without mutating
 // the original orders array.
+const sortedByName = [...orders].sort((a, b) => a.product.localeCompare(b.product));
+console.log(sortedByName);
 
 // 12. Flatten this nested structure into a single array of product names:
 const catalog = [
@@ -91,11 +96,18 @@ const catalog = [
 ];
 // Expected: ["laptop", "desktop", "tablet", "phone", "smartwatch", "keyboard", "mouse", "monitor"]
 // Hint: flatMap
+const flatten = catalog.flatMap(s => s.products);
+console.log(flatten);
 
 // 13. Remove duplicate values from this array without using Set:
 const tags = ["js", "node", "js", "react", "node", "ts", "react", "js"];
 // Expected: ["js", "node", "react", "ts"]
 // Hint: filter + indexOf
+// The filter() method checks every element. For each tag, tags.indexOf(tag) returns the index of its first occurrence. 
+// The current element’s index is kept only when it matches that first-occurrence index. Duplicate values appear at later 
+// indexes, so they are excluded.
+const uniqueTags = tags.filter((tag, index) => tags.indexOf(tag) === index);
+console.log(uniqueTags);
 
 // 14. Chunk an array into groups of a given size using reduce.
 // chunk([1, 2, 3, 4, 5, 6, 7], 3) → [[1, 2, 3], [4, 5, 6], [7]]
@@ -107,7 +119,11 @@ function chunk(arr, size) {
 // 15. Implement your own version of Array.prototype.map
 // using a for...of loop. Don't use .map() inside it.
 function myMap(arr, fn) {
-  // your code here
+  const result = []
+  for (const item of arr) {
+    result.push(fn(item))
+  }
+  return result
 }
 console.log(myMap([1, 2, 3], n => n * 2)); // [2, 4, 6]
 
@@ -115,5 +131,10 @@ console.log(myMap([1, 2, 3], n => n * 2)); // [2, 4, 6]
 // zip([1, 2, 3], ["a", "b", "c"]) → [[1, "a"], [2, "b"], [3, "c"]]
 // If arrays are different lengths, stop at the shorter one.
 function zip(a, b) {
-  // your code here
+  const result = []
+  for(let i = 0; i < Math.min(a.length, b.length); i++) {
+    result.push([a[i], b[i]])
+  }
+  return result
 }
+console.log(zip([1, 2, 3, 4], ["a", "b", "c"]))
