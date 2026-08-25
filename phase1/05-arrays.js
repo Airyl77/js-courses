@@ -119,11 +119,11 @@ function chunk(arr, size) {
 // 15. Implement your own version of Array.prototype.map
 // using a for...of loop. Don't use .map() inside it.
 function myMap(arr, fn) {
-  const result = []
+  const result = [];
   for (const item of arr) {
-    result.push(fn(item))
+    result.push(fn(item));
   }
-  return result
+  return result;
 }
 console.log(myMap([1, 2, 3], n => n * 2)); // [2, 4, 6]
 
