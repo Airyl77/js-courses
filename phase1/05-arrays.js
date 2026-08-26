@@ -76,7 +76,7 @@ console.log(groupedByShipped);
 // 10. Return a new array of orders with a discount applied —
 // 10% off all items over $400. Don't mutate the originals.
 // Hint: map + spread to create new objects.
-const getDiscount = [...orders].map((order) => {
+const getDiscount = orders.map((order) => {
   if (order.price > 400) {
     //For orders whose price is greater than $400, { ...order, price: order.price * 0.9 } creates a new object. 
     // It copies the original properties and replaces price with a value representing a 10% discount. Orders priced 
