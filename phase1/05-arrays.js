@@ -117,8 +117,18 @@ console.log(uniqueTags);
 // chunk([1, 2, 3, 4, 5, 6, 7], 3) → [[1, 2, 3], [4, 5, 6], [7]]
 // chunk([1, 2, 3, 4], 2)          → [[1, 2], [3, 4]]
 function chunk(arr, size) {
-  // your code here
+  // reduce iterates through the array while building the result in acc. The _ parameter represents the current element, 
+  // but it is unused; only the element’s index matters. Whenever index % size === 0, the code has reached the start of a new 
+  // group, so arr.slice(index, index + size) extracts that group and adds it to acc.
+  // The final [] is the initial accumulator value. For example, with arr = [1, 2, 3, 4, 5] and size = 2, 
+  // the result is [[1, 2], [3, 4], [5]]. slice does not modify the original array, and its ending index is exclusive.
+  return arr.reduce((acc, _, index) => {
+    if (index % size === 0) acc.push(arr.slice(index, index + size));
+    return acc;
+  }, []);
 }
+console.log(chunk([1, 2, 3, 4, 5, 6, 7], 3)); // [[1, 2, 3], [4, 5, 6], [7]]
+console.log(chunk([1, 2, 3, 4], 2));          // [[1, 2], [3, 4]]
 
 // 15. Implement your own version of Array.prototype.map
 // using a for...of loop. Don't use .map() inside it.
