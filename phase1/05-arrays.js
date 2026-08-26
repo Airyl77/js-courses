@@ -12,7 +12,7 @@ const names = orders.map(prod => prod.product); //object => object property
 console.log(names);
 
 // 2. Get all orders that have been shipped.
-const shipped = orders.filter(prod => prod.shipped === true);
+const shipped = orders.filter(prod => prod.shipped); // instead of prod.shipped === true
 console.log(shipped);
 
 // 3. Calculate the total price of all orders.
@@ -21,28 +21,32 @@ console.log(totalPrice);
 
 // 4. Get the total price of shipped orders only.
 //    (hint: you can chain filter + reduce, or use reduce alone)
-const totalShippedPrice = orders.filter(prod => prod.shipped === true).reduce((total, prod) => total + prod.price, 0);
+const totalShippedPrice = orders.filter(prod => prod.shipped).reduce((total, prod) => total + prod.price, 0); // instead of prod.shipped === true
 console.log(totalShippedPrice);
 
 // 5. Find the most expensive order object.
-let maxCost = 0;
-let obj = {};
-for (const item of orders) {
-    if (item.price > maxCost) {
-        //Object.assign(obj, item); // This creates a shallow copy of item and assigns its properties to obj, so obj will 
-                                    // have the same properties as item but will be a different object in memory.
-        obj = item; // This works because objects are assigned by reference, so obj will point to the same object as item.
-        maxCost = item.price;
-    } 
-}
-console.log(obj)
+// let maxCost = 0;
+// let obj = {};
+// for (const item of orders) {
+//     if (item.price > maxCost) {
+//         //Object.assign(obj, item); // This creates a shallow copy of item and assigns its properties to obj, so obj will 
+//                                     // have the same properties as item but will be a different object in memory.
+//         obj = item; // This works because objects are assigned by reference, so obj will point to the same object as item.
+//         maxCost = item.price;
+//     } 
+// }
+// can be implemented via reduce
+const mostExpensive = orders.reduce((max, order) =>
+  order.price > max.price ? order : max
+, orders[0]);
+console.log(mostExpensive)
 
 // 6. Check if any order is over $900.
 const isOver900 = orders.some(prod => prod.price > 900);
 console.log(isOver900);
 
 // 7. Check if all orders under $100 have been shipped.
-const isShipped = orders.filter(prod => prod.price < 100).every(prod => prod.shipped === true );
+const isShipped = orders.filter(prod => prod.price < 100).every(prod => prod.shipped); // instead of prod.shipped === true
 console.log(isShipped);
 
 // 8. Sort orders by price, lowest to highest (don't mutate the original).
