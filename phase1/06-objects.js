@@ -93,18 +93,43 @@ const users2 = [
 // 9. Write a function mapValues(obj, fn) that applies a function
 // to every value in an object, keeping the keys the same.
 // mapValues({ a: 1, b: 2, c: 3 }, n => n * 10) → { a: 10, b: 20, c: 30 }
+function mapValues(obj, fn) {
+  return Object.fromEntries(Object.entries(obj).map(([key, val]) => [key, fn(val)]));
+}
+console.log(mapValues({ a: 1, b: 2, c: 3 }, n => n * 10));
 
 // 10. Write a function invert(obj) that swaps keys and values.
 // invert({ a: "x", b: "y" }) → { x: "a", y: "b" }
+function invert(obj) {
+  return Object.fromEntries(Object.entries(obj).map(([key, val]) => [val, key]));
+}
+console.log(invert({ a: "x", b: "y" }));
 
 // 11. Write a function deepClone(obj) that creates a full deep copy —
 // nested objects and arrays should NOT share references with the original.
 // (Don't use structuredClone or JSON.parse/stringify — do it manually
 // with recursion, so you understand what those built-ins do for you.)
-const original = { name: "Eugeniu", address: { city: "Chișinău" }, tags: ["dev", "js"] };
+const original = { name: "Eugeniu", address: { city: "Chișinău" }, tags: ["dev", { js: "TypeScript" }] };
+
+function deepClone(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => deepClone(item));
+  } else if (typeof value === "object" && value !== null) {
+    const newobj = {};
+    for (const [key, val] of Object.entries(value)) {
+      newobj[key] = deepClone(val);
+    }
+    return newobj;
+  } else {
+    return value;
+  }
+};
+
 const clone = deepClone(original);
+console.log(clone);
 clone.address.city = "Balti";
 console.log(original.address.city); // should still be "Chișinău"
+console.log(clone);
 
 // 12. Write a function deepEqual(a, b) that works recursively —
 // unlike the earlier version, this one must handle nested objects.
