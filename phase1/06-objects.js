@@ -83,6 +83,7 @@ function deepEqual(a, b) {
 console.log(deepEqual({ a: 1, b: 2 }, { a: 1, b: 2 }));
 console.log(deepEqual({ a: 1, b: 1 }, { a: 1, b: 2 }));
 
+
 const users2 = [
   { id: 1, name: "Eugeniu", age: 30, role: "admin", active: true, salary: 5000 },
   { id: 2, name: "Alex",    age: 25, role: "user",  active: false, salary: 3200 },
@@ -137,15 +138,65 @@ console.log(clone);
 // deepEqual({ a: { b: 1 } }, { a: { b: 2 } }) → false
 // Hint: if a value is itself an object, call deepEqual on it recursively.
 
+function deepEqual2(a, b) {
+  if (a === b) return true;
+
+  if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) {
+    return false; // one is a primitive/null mismatch that isn't ===
+  }
+
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+  if (keysA.length !== keysB.length) return false;
+
+  for (const key of keysA) {
+    if (!deepEqual2(a[key], b[key])) return false; // recurse for everything, keep looping
+  }
+  return true;
+}
+console.log(deepEqual2({ a: { b: 1 } }, { a: { b: 1 } })); // → true
+console.log(deepEqual2({ a: { b: 1 } }, { a: { b: 2 } })); // → false
+console.log(deepEqual2({ a: { b: 1 }, c: 5 }, { a: { b: 1 }, c: 5 })); // should be false
+
 // 13. Write a function groupBy(array, keyFn) — a generic version of the
 // role-grouping you did earlier, but reusable for any key.
 // groupBy(users, user => user.active) → { true: [...], false: [...] }
 // groupBy(users, user => user.age >= 30 ? "senior" : "junior") → { senior: [...], junior: [...] }
 
+function groupBy(array, keyFn) {
+  return array.reduce((acc, item) => {
+    const key = keyFn(item);
+    if (!acc[key]) {
+      acc[key] = []; // create an array for this key if it doesn't exist
+    }
+    acc[key].push(item); // add the product to the appropriate array
+    return acc;
+  }, {});
+};
+console.log(groupBy(users, user => user.active));
+console.log(groupBy(users, user => user.age >= 30 ? "senior" : "junior"));
+
 // 14. Write a function sortByKey(array, key) that returns a new array
 // of objects sorted by a given property name, without mutating the original.
 // sortByKey(users, "salary") → users sorted by salary ascending
+function sortByKey(users, key) {
+  return [...users].sort((a, b) => {
+    if (a[key] < b[key]) return -1;
+    if (a[key] > b[key]) return 1;
+    return 0;
+    //return a[key] - b[key]; // numeric sort for ascending order
+  });
+}
+console.log(sortByKey(users2, "salary"));
 
 // 15. Using reduce, calculate summary statistics from the users array
 // in a single pass — total salary, average age, and count of active users.
 // Expected shape: { totalSalary: 17500, avgAge: 29.5, activeCount: 2 }
+const summary = users2.reduce((acc, user) => {
+  acc.totalSalary += user.salary;
+  acc.avgAge += user.age;
+  if (user.active) { acc.activeCount++; }
+  return acc;
+  }, {totalSalary: 0, avgAge: 0, activeCount: 0});
+  summary.avgAge /= users2.length;
+  console.log(summary);
