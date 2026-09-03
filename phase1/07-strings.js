@@ -1,11 +1,20 @@
 // 1. Write a function "reverseString" that reverses a string.
 // reverseString("hello") → "olleh"
+const reverseString = (str) => str.split("").reverse().join("");
+console.log(reverseString("hello"));
 
 // 2. Write a function "isPalindrome" that checks if a string
 // reads the same forwards and backwards (ignore case and spaces).
 // isPalindrome("racecar")        → true
 // isPalindrome("A man a plan a canal Panama") → true
 // isPalindrome("hello")          → false
+function isPalindrome(str) {
+  const trimmedString = str.toLowerCase().replaceAll(" ","");
+  return trimmedString === (reverseString(trimmedString));
+}
+console.log(isPalindrome("racecar")); //       → true
+console.log(isPalindrome("A man a plan a canal Panama")); //→ true
+console.log(isPalindrome("hello"));
 
 // 3. Write a function "capitalize" that capitalizes the first
 // letter of each word in a string.
