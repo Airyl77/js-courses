@@ -19,6 +19,12 @@ console.log(isPalindrome("hello"));
 // 3. Write a function "capitalize" that capitalizes the first
 // letter of each word in a string.
 // capitalize("hello world") → "Hello World"
+function capitalize(str) {
+  // split the string into words, capitalize the first letter of each word, and join them back together with spaces
+  return str.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "); 
+}
+console.log(capitalize("hello world"));
+
 
 // 4. Write a function "truncate" that shortens a string to a max
 // length and adds "..." if it was cut off.
