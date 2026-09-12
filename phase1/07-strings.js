@@ -30,15 +30,26 @@ console.log(capitalize("hello world"));
 // length and adds "..." if it was cut off.
 // truncate("Hello World", 5)  → "Hello..."
 // truncate("Hi", 5)           → "Hi" (no truncation needed)
+function truncate(str, length) {
+  if (str.length <= length) {
+    return str;
+  } else {
+    return str.slice(0, length) + "...";
+  }
+} 
+console.log(truncate("Hello World", 5));
+console.log(truncate("Hi", 5));
 
-// 5. Write a function "countVowels" that counts how many vowels
+// 5. Write a function "countVowels" t>hat counts how many vowels
 // are in a string (a, e, i, o, u — case insensitive).
 // countVowels("Hello World") → 3
+
 
 // 6. Write a function "slugify" that converts a string into a
 // URL-friendly slug: lowercase, spaces replaced with hyphens,
 // special characters removed.
 // slugify("Hello, World! It's JS Time") → "hello-world-its-js-time"
+
 
 // 7. Using a template literal, build a multi-line receipt from this data:
 const receipt = {
