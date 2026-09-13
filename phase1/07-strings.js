@@ -43,6 +43,17 @@ console.log(truncate("Hi", 5));
 // 5. Write a function "countVowels" t>hat counts how many vowels
 // are in a string (a, e, i, o, u — case insensitive).
 // countVowels("Hello World") → 3
+function countVowels(str) {
+  //This line uses JavaScript’s match() method on a string variable named str. It searches the string for any characters that match 
+  // the pattern inside the regex: /[aeiou]/gi.
+
+  //The pattern [aeiou] means “match any single character that is one of these vowels: a, e, i, o, or u.” The g flag tells 
+  // JavaScript to find all matches in the whole string, not just the first one. The i flag makes the match case-insensitive, so it
+  //  will also match uppercase vowels like A, E, I, O, and U.
+  const matches = str.match(/[aeiou]/gi);
+  return matches ? matches.length : 0;
+}
+console.log(countVowels("Hello World")); // → 3
 
 
 // 6. Write a function "slugify" that converts a string into a
