@@ -60,6 +60,8 @@ console.log(countVowels("Hello World")); // → 3
 // URL-friendly slug: lowercase, spaces replaced with hyphens,
 // special characters removed.
 // slugify("Hello, World! It's JS Time") → "hello-world-its-js-time"
+const slugify = (str) => str.toLowerCase().replaceAll(" ", "-").replace(/[^a-z0-9//-]/g, "");
+console.log(slugify("Hello, World! It's JS Time"));
 
 
 // 7. Using a template literal, build a multi-line receipt from this data:
