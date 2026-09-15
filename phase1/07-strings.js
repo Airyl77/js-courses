@@ -78,6 +78,23 @@ const receipt = {
 // - Mouse: $49
 // Total: $1048
 
+// Builds and returns a multi-line receipt string from a receipt object.
+// The parameter is destructured so the function can use `customer` and
+// `items` directly instead of accessing them through the object. An array is
+// created with the receipt heading, one formatted line for each item, and a
+// final line containing the total price. The spread operator inserts all of
+// the item lines into that array, while `map()` converts each item object into
+// text such as "- Laptop: $999". `reduce()` adds all item prices together to
+// calculate the total. Finally, `join("\n")` combines every line with newline
+// characters, and the template literal returns the resulting receipt string.
+const buildReceipt = ({ customer, items }) => `${[
+  `Receipt for ${customer}`,
+  ...items.map(({ name, price }) => `- ${name}: $${price}`),
+  `Total: $${items.reduce((sum, { price }) => sum + price, 0)}`,
+].join("\n")}`;
+console.log(buildReceipt(receipt));
+
+
 // 8. Write a function "wordCount" that returns how many words
 // are in a string, handling multiple/extra spaces correctly.
 // wordCount("  Hello   world  ") → 2
