@@ -60,7 +60,7 @@ console.log(countVowels("Hello World")); // → 3
 // URL-friendly slug: lowercase, spaces replaced with hyphens,
 // special characters removed.
 // slugify("Hello, World! It's JS Time") → "hello-world-its-js-time"
-const slugify = (str) => str.toLowerCase().replaceAll(" ", "-").replace(/[^a-z0-9//-]/g, "");
+const slugify = (str) => str.toLowerCase().replaceAll(" ", "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-");
 console.log(slugify("Hello, World! It's JS Time"));
 
 
@@ -99,3 +99,5 @@ console.log(buildReceipt(receipt));
 // are in a string, handling multiple/extra spaces correctly.
 // wordCount("  Hello   world  ") → 2
 // Hint: split on whitespace, then filter out empty strings
+const wordCount = (str) => str.split(" ").filter(Boolean).length;
+console.log(wordCount("  Hello   world   this is me")); // → 5
