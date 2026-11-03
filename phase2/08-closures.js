@@ -34,6 +34,18 @@ console.log(counter.getValue()); // 1
 // only allows fn to be called ONE time — subsequent calls do nothing
 // (or return the first result, cached).
 function sayHi() { console.log("hi!"); return "hi"; }
+function once(fn) {
+    let called = false;
+    let result;
+    return function(...args) {
+        if (!called) {
+            called = true;
+            result = fn(...args);
+        }
+        return result;
+    }
+}
+
 const sayHiOnce = once(sayHi);
 sayHiOnce(); // logs "hi!", returns "hi"
 sayHiOnce(); // does NOT log again, still returns "hi" (cached)
